@@ -57,8 +57,6 @@ https://pokeapi.co/
 - Slider to adjust volume.
 - Communicate with PokeAPI to access and display Pokemon sprite on the page.
 - Toggle Pokemon sprite's HTML class on event to make it dance to the music.
-- Flexbox styling
-
 
 #### PostMVP  
 
