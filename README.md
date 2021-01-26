@@ -16,6 +16,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
 
 https://pokeapi.co/
 
+```json
 "abilities": [
         {
             "ability": {
@@ -41,7 +42,8 @@ https://pokeapi.co/
             "is_hidden": true,
             "slot": 3
         }
-    ]
+    ]    
+```
 
 ## Wireframes
 
@@ -84,19 +86,27 @@ https://pokeapi.co/
 
 | Component | Priority | Estimated Time | Time Invested | Actual Time |
 | --- | :---: |  :---: | :---: | :---: |
-| Core HTML & CSS | H | 1 hr| - | - |
+| Core HTML | H | 1 hr| - | - |
+| CSS | H | 3 hrs| - | - |
+| Flex Container/Flex Items | H | 3 hrs| - | - |
 | PokeAPI Integration | H | 3 hrs| - | - |
-| Keyboard Functionality | H | 4 hrs| - | - |
+| Keyboard Events Declaration | H | 2 hrs| - | - |
+| Keyboard Pitch Assignment | H | 2 hrs| - | - |
+| Volume Slider | H | 2 hrs| - | - |
+| Web Audio API | H | 3 hrs| - | - |
+| Sound & Filter Exploration | H | 4 hrs| - | - |
 | Pokemon Animations | H | 2 hrs| - | - |
 | Advanced CSS | H | 4 hrs| - | - |
 | Fine-tune for mobile | M-H | 2 hrs | - | - |
 | Pokemon Search | M | 2 hrs| - | - |
 | Create more sounds | L | 4 hrs| - | - |
-| Total | - | 22 hrs | - | - |
+| Total | - | 38 hrs | - | - |
 
 ## Code Snippet
-
-
+``` 
+ Code Functionality
+```
 
 ## Change Log
- 
+ - 
+ - 
