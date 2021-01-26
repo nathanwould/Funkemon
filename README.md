@@ -60,7 +60,7 @@ https://pokeapi.co/
 
 #### PostMVP  
 
-- Advanced styling including a Pokemon-themed background
+- CSS Transition and Animation Effects
 - Option to search for a pokemon to be your dancing companion
 - One or more advanced sounds (adding filters, LFO, additional perameters such as attack and decay)
 
