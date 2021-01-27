@@ -75,7 +75,7 @@ https://pokeapi.co/
 |Jan 27| Core Keyboard Functionality, PokeAPI Integration | Incomplete
 |Jan 28| CSS Styling, Pokemon Animations | Incomplete
 |Jan 29| Complete MVP, Fine-Tune For Usability | Incomplete
-|Jan 29| Post-MVP: Pokemon Search, Custom Synthesizer Sounds | Incomplete
+|Jan 30| Post-MVP: Pokemon Search, Custom Synthesizer Sounds | Incomplete
 |Feb 1| Presentations/Project Submission | Incomplete
 
 ## Priority Matrix
