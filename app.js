@@ -87,9 +87,36 @@ function createKey(note, octave, freq) {
 document.addEventListener('keydown', keyPressed);
 document.addEventListener('keyup', keyReleased);
 
+// a pinking filter that softens the default oscillator wave sounds
+
+var bufferSize = 256;
+var effect = (function () {
+  var b0, b1, b2, b3, b4, b5, b6;
+  b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
+  var node = audioContext.createScriptProcessor(bufferSize, 1, 1);
+  node.onaudioprocess = function (e) {
+    var input = e.inputBuffer.getChannelData(0);
+    var output = e.outputBuffer.getChannelData(0);
+    for (var i = 0; i < bufferSize; i++) {
+      b0 = 0.99886 * b0 + input[i] * 0.0555179;
+      b1 = 0.99332 * b1 + input[i] * 0.0750759;
+      b2 = 0.96900 * b2 + input[i] * 0.1538520;
+      b3 = 0.86650 * b3 + input[i] * 0.3104856;
+      b4 = 0.55000 * b4 + input[i] * 0.5329522;
+      b5 = -0.7616 * b5 - input[i] * 0.0168980;
+      output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + input[i] * 0.5362;
+      output[i] *= 0.11; // (roughly) compensate for gain
+      b6 = input[i] * 0.115926;
+    }
+  }
+  return node;
+})();
+
 function playTone(freq) {
   let osc = audioContext.createOscillator();
-  osc.connect(masterGainNode);
+  // osc.connect(masterGainNode);
+  osc.connect(effect)
+  effect.connect(audioContext.destination)
   let type = wavePicker.options[wavePicker.selectedIndex].value;
 
   if (type == 'custom') {
@@ -130,7 +157,6 @@ function noteReleased(event) {
 }
 
 function keyPressed(event) {
-  console.log(event.target.charCode)
   audioContext.resume();
   if (event.code == 'KeyA') {
     dataset = document.querySelector('.A').dataset
