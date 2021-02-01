@@ -51,10 +51,8 @@ function pokeDance() {
   let sprite = document.querySelector('#sprite')
   if (!sprite.dataset['dance']) {
     sprite.dataset['dance'] = 'yes';
-    sprite.classList.add('animate__bounce')
   } else {
     delete sprite.dataset['dance'];
-    sprite.classList.remove('animate__bounce')
   }
 }
 
