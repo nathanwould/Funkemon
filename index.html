@@ -5,33 +5,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script defer src='app.js'></script>
   <title>PokeSynth</title>
 </head>
 
 <body>
-  <h1>PokeSynth</h1>
-  <div class='container'>
-    <div class='keyboard'></div>
+  <img class="title" src="https://fontmeme.com/permalink/210128/f4128bb6c902be6ddcf0f4e86557ad07.png" alt="pokemon-font"
+    border="0" alt="PokeSynth">
+  <div id="pokemonParent">
+    <div id="pokeDiv"></div>
+    <form id="searchForm">
+      <input type="text" id="pokeSearch" name="Pokemon" placeholder="Find a Pokemon!">
+      <input type="submit" placeholder="Search" id="search">
+    </form>
   </div>
-  <div class='settingsBar'>
-    <div class='left'>
-      <span>Volume:</span>
-      <input type="range" min='0.0' max='1.0' step='0.01' value="0.5" list='volumes' name='volume'>
-      <datalist id='volumes'>
-        <option value='0.0' label='mute'></option>
-        <option value="1.0" label='100%'></option>
-      </datalist>
+  <div class='container'>
+    <div class='settingsBar'>
+      <div class='left'>
+        <span>Volume:</span>
+        <input type="range" min='0.0' max='1.0' step='0.01' value="0.5" list='volumes' name='volume'>
+        <datalist id='volumes'>
+          <option value='0.0' label='mute'></option>
+          <option value="1.0" label='100%'></option>
+        </datalist>
+      </div>
+      <div class='right'>
+        <span>Current waveform: </span>
+        <select name="waveform">
+          <option value="sine">Sine</option>
+          <option value="square">Square</option>
+          <option value="sawtooth">Sawtooth</option>
+          <option value="triangle">Triangle</option>
+          <option value="custom">Custom</option>
+        </select>
+      </div>
     </div>
-    <div class='right'>
-      <span>Current waveform: </span>
-      <select name="waveform">
-        <option value="sine">Sine</option>
-        <option value="square">Square</option>
-        <option value="sawtooth">Sawtooth</option>
-        <option value="triangle">Triangle</option>
-        <option value="custom">Custom</option>
-      </select>
+    <div class='keyboard'>
+      <div class="keys"></div>
     </div>
   </div>
 </body>

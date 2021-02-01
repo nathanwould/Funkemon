@@ -1,8 +1,70 @@
+// First, the PokeAPI axios call and functionality to search and display a pokemon sprite
+async function catchEm(pokeName) {
+  const url = `https://pokeapi.co/api/v2/pokemon/${pokeName}`;
+  try {
+    let response = await axios.get(url);
+    let data = response.data
+    console.log(data)
+    showPoke(data);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// display pokemon sprite and name
+function showPoke(data) {
+  let container = document.querySelector("#pokeDiv")
+  let pokeSprite = document.createElement('img')
+  let pokeName = document.createElement('h3')
+  pokeSprite.src = `${data.sprites.front_default}`
+  pokeSprite.id = 'sprite'
+  pokeSprite.className = 'animate__animated'
+
+  pokeName.innerHTML = `${data.name}`
+
+  container.append(pokeSprite)
+  container.append(pokeName)
+}
+
+// Event listener and form to capture pokemon search
+let form = document.querySelector('form')
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+  removeImage()
+  const inputValue = document.querySelector('#pokeSearch').value.toLowerCase()
+  catchEm(inputValue)
+})
+
+// remove existing sprite image if present
+function removeImage() {
+  let removeDiv = document.querySelector('#pokeDiv');
+  while (removeDiv.lastChild) {
+    removeDiv.removeChild(removeDiv.lastChild)
+  }
+}
+
+// function to make the sprites 'dance'
+document.addEventListener('keydown', pokeDance)
+
+function pokeDance() {
+  let sprite = document.querySelector('#sprite')
+  if (!sprite.dataset['dance']) {
+    sprite.dataset['dance'] = 'yes';
+    sprite.classList.add('animate__bounce')
+  } else {
+    delete sprite.dataset['dance'];
+    sprite.classList.remove('animate__bounce')
+  }
+}
+
+// Then building the audio properties and elements
+
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let oscList = [];
 let masterGainNode = null;
 
-let keyboard = document.querySelector(".keyboard");
+let keyboard = document.querySelector(".keys");
 let wavePicker = document.querySelector("select[name='waveform']");
 let volumeControl = document.querySelector("input[name='volume']");
 
@@ -10,6 +72,8 @@ let noteFreq = null;
 let customWaveForm = null;
 let sineTerms = null;
 let cosineTerms = null;
+
+// Building the set of frequencies we'll access later and use to build the keys
 
 function createNoteTabel() {
   let noteFreq = [];
@@ -35,6 +99,8 @@ function createNoteTabel() {
   return noteFreq
 }
 
+// Initializes the audio context, creates gain nodes, and builds the keys
+
 window.onload = function setup() {
 
   var context = new AudioContext();
@@ -54,7 +120,9 @@ window.onload = function setup() {
     });
   })
 
-  sineTerms = new Float32Array([0, 0, 1, 0, 1]);
+  // Literally no clue what exactly this is doing
+
+  sineTerms = new Float32Array([0, 4, 1, 1, 1]);
   cosineTerms = new Float32Array(sineTerms.length);
   customWaveForm = audioContext.createPeriodicWave(cosineTerms, sineTerms);
 
@@ -63,19 +131,28 @@ window.onload = function setup() {
   }
 }
 
-// setup()
+// Function called earlier to create keys with datasets to be accessed on event, along with listeners for mouse events
 
 function createKey(note, octave, freq) {
   let keyElement = document.createElement("div");
-
+  let nameSpan = document.createElement("span");
 
   keyElement.className = 'key';
   keyElement.dataset['octave'] = octave;
   keyElement.dataset['note'] = note;
+  if (keyElement.dataset['note'] === ';') {
+    keyElement.id = 'semi'
+  } if (keyElement.dataset['note'] === 'W' || keyElement.dataset['note'] === 'R' || keyElement.dataset['note'] === 'T' || keyElement.dataset['note'] === 'U' || keyElement.dataset['note'] === 'I' || keyElement.dataset['note'] === 'O') {
+    keyElement.dataset['blackKey'] = 'yes'
+  } else {
+    keyElement.dataset['whiteKey'] = 'yes'
+  }
+  keyElement.dataset['keyboard'] = keyboard
   keyElement.dataset['frequency'] = freq;
   keyElement.className = `key ${note}`;
-  keyElement.innerHTML = note;
-
+  keyElement.append(nameSpan);
+  nameSpan.innerHTML = note;
+  nameSpan.classList.add('nameSpan')
 
   keyElement.addEventListener('mousedown', notePressed);
   keyElement.addEventListener('mouseup', noteReleased);
@@ -84,6 +161,9 @@ function createKey(note, octave, freq) {
 
   return keyElement
 }
+
+// and global listeners for key events
+
 document.addEventListener('keydown', keyPressed);
 document.addEventListener('keyup', keyReleased);
 
@@ -112,10 +192,19 @@ var effect = (function () {
   return node;
 })();
 
+
+// function to initialize oscillator
+
 function playTone(freq) {
   let osc = audioContext.createOscillator();
-  // osc.connect(masterGainNode);
+  var biquadFilter = audioContext.createBiquadFilter();
+
+  biquadFilter.type = "lowpass"
+  biquadFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
+  // biquadFilter.gain.setValueAtTime(25, audioContext.currentTime)
+  osc.connect(masterGainNode);
   osc.connect(effect)
+  osc.connect(biquadFilter)
   effect.connect(audioContext.destination)
   let type = wavePicker.options[wavePicker.selectedIndex].value;
 
@@ -130,6 +219,8 @@ function playTone(freq) {
   return osc
 }
 
+// Function to call playTone and noteReleased functions on event
+
 function notePressed(event) {
   audioContext.resume();
 
@@ -139,7 +230,6 @@ function notePressed(event) {
     if (!dataset['pressed']) {
       let octave = +dataset['octave'];
       oscList[octave][dataset['note']] = playTone(dataset["frequency"]);
-      console.log(dataset)
       dataset['pressed'] = 'yes';
     }
   }
@@ -155,6 +245,15 @@ function noteReleased(event) {
     delete dataset['pressed'];
   }
 }
+
+// Volume slider functionality
+
+function changeVolume(event) {
+  masterGainNode.gain.value = volumeControl.value
+}
+
+
+// All of the individual key events, good lord
 
 function keyPressed(event) {
   audioContext.resume();
@@ -263,8 +362,8 @@ function keyPressed(event) {
       oscList[octave][dataset['note']] = playTone(dataset["frequency"]);
       dataset['pressed'] = 'yes';
     }
-  } if (event.charCode == '186') {
-    dataset = document.querySelector('.;').dataset
+  } if (event.keyCode == 186) {
+    dataset = document.querySelector('#semi').dataset
     if (!dataset['pressed']) {
       let octave = +dataset['octave'];
       oscList[octave][dataset['note']] = playTone(dataset["frequency"]);
@@ -395,8 +494,8 @@ function keyReleased(event) {
       delete oscList[octave][dataset['note']];
       delete dataset['pressed'];
     }
-  } if (event.charCode == '186') {
-    dataset = document.querySelector('.;').dataset
+  } if (event.keyCode == 186) {
+    dataset = document.querySelector('#semi').dataset
     if (dataset && dataset['pressed']) {
       let octave = +dataset['octave'];
       oscList[octave][dataset['note']].stop();
@@ -404,8 +503,4 @@ function keyReleased(event) {
       delete dataset['pressed'];
     }
   }
-}
-
-function changeVolume(event) {
-  masterGainNode.gain.value = volumeControl.value
 }
