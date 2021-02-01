@@ -159,6 +159,8 @@ function createKey(note, octave, freq) {
   keyElement.addEventListener('mouseover', notePressed);
   keyElement.addEventListener('mouseleave', noteReleased);
 
+  keyElement.addEventListener('mousedown', pokeDance);
+
   return keyElement
 }
 
@@ -167,9 +169,9 @@ function createKey(note, octave, freq) {
 document.addEventListener('keydown', keyPressed);
 document.addEventListener('keyup', keyReleased);
 
-// a pinking filter that softens the default oscillator wave sounds
+// a pinking filter that softens the default oscillator wave sounds, by Zach Denton https://noisehack.com/custom-audio-effects-javascript-web-audio-api/
 
-var bufferSize = 256;
+var bufferSize = 512;
 var effect = (function () {
   var b0, b1, b2, b3, b4, b5, b6;
   b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
@@ -197,11 +199,11 @@ var effect = (function () {
 
 function playTone(freq) {
   let osc = audioContext.createOscillator();
-  var biquadFilter = audioContext.createBiquadFilter();
 
+  var biquadFilter = audioContext.createBiquadFilter();
   biquadFilter.type = "lowpass"
   biquadFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
-  // biquadFilter.gain.setValueAtTime(25, audioContext.currentTime)
+
   osc.connect(masterGainNode);
   osc.connect(effect)
   osc.connect(biquadFilter)
@@ -219,7 +221,7 @@ function playTone(freq) {
   return osc
 }
 
-// Function to call playTone and noteReleased functions on event
+// Functions to call playTone and noteReleased functions on event
 
 function notePressed(event) {
   audioContext.resume();

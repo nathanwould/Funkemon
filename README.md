@@ -84,29 +84,50 @@ https://pokeapi.co/
 
 ## Timeframes
 
-| Component | Priority | Estimated Time | Time Invested | Actual Time |
-| --- | :---: |  :---: | :---: | :---: |
-| Core HTML | H | 1 hr| - | - |
-| CSS | H | 3 hrs| - | - |
-| Flex Container/Flex Items | H | 3 hrs| - | - |
-| PokeAPI Integration | H | 3 hrs| - | - |
-| Keyboard Events Declaration | H | 2 hrs| - | - |
-| Keyboard Pitch Assignment | H | 2 hrs| - | - |
-| Volume Slider | H | 2 hrs| - | - |
-| Web Audio API | H | 3 hrs| - | - |
-| Sound & Filter Exploration | H | 4 hrs| - | - |
-| Pokemon Animations | H | 2 hrs| - | - |
-| Advanced CSS | H | 4 hrs| - | - |
-| Fine-tune for mobile | M-H | 2 hrs | - | - |
-| Pokemon Search | M | 2 hrs| - | - |
-| Create more sounds | L | 4 hrs| - | - |
-| Total | - | 38 hrs | - | - |
+| Component | Priority | Estimated Time | Actual Time |
+| --- | :---: |  :---: | :---: |
+| Core HTML | H | 1 hr| .5 hr |
+| CSS | H | 3 hrs| 2 hrs |
+| Flex Container/Flex Items | H | 3 hrs| 1 hr |
+| PokeAPI Integration | H | 3 hrs| 1 hr |
+| Keyboard Events Declaration | H | 2 hrs| 2 hrs |
+| Keyboard Pitch Assignment | H | 2 hrs| 4 hrs |
+| Web Audio API | H | 3 hrs| 3 hrs |
+| Sound & Filter Exploration | H | 4 hrs| 4 hrs |
+| Pokemon Animations | H | 2 hrs| 2 hrs |
+| Advanced CSS | H | 4 hrs| 6 hrs |
+| Fine-tune for mobile | M-H | 2 hrs | 2 hrs |
+| Pokemon Search | M | 2 hrs| 1 hr |
+| Create more sounds | L | 4 hrs| 4 hrs |
+| Total | - | 38 hrs | 32 hrs |
 
 ## Code Snippet
 ``` 
- Code Functionality
+ function playTone(freq) {
+  let osc = audioContext.createOscillator();
+
+  var biquadFilter = audioContext.createBiquadFilter();
+  biquadFilter.type = "lowpass"
+  biquadFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
+
+  osc.connect(masterGainNode);
+  osc.connect(effect)
+  osc.connect(biquadFilter)
+  effect.connect(audioContext.destination)
+  let type = wavePicker.options[wavePicker.selectedIndex].value;
+
+  if (type == 'custom') {
+    osc.setPeriodicWave(customWaveForm);
+  } else {
+    osc.type = type;
+  }
+  osc.frequency.value = freq;
+  osc.start();
+
+  return osc
+}
 ```
 
 ## Change Log
- - 
+ - v1 uploaded (1/31/2021)
  - 
