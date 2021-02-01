@@ -2,7 +2,7 @@
 
 ## Project Name
 
-Funkemon
+PokeSynth
 
 ## Project Description
 
@@ -53,7 +53,7 @@ https://pokeapi.co/
 
 #### MVP 
 
-- Graphic keyboard interface of at least one chromatic octave that works on mouseclick and changes color to indicate when key is pressed.
+- Graphic keyboard interface of at least one chromatic octave that works on mouseclick and changes to indicate when key is pressed.
 - Option for user to use computer keyboard to play.
 - Several sounds to choose from, such as sine wave, square wave, triangle wave, sawtooth.
 - Slider to adjust volume.
@@ -70,12 +70,12 @@ https://pokeapi.co/
 
 |  Day | Deliverable | Status
 |---|---| ---|
-|Jan 25| Prompt / Wireframes / Priority Matrix / Timeframes | Incomplete
-|Jan 26| Project Approval, Core HTML Structure | Incomplete
-|Jan 27| Core Keyboard Functionality, PokeAPI Integration | Incomplete
-|Jan 28| CSS Styling, Pokemon Animations | Incomplete
-|Jan 29| Complete MVP, Fine-Tune For Usability | Incomplete
-|Jan 30| Post-MVP: Pokemon Search, Custom Synthesizer Sounds | Incomplete
+|Jan 25| Prompt / Wireframes / Priority Matrix / Timeframes | Complete
+|Jan 26| Project Approval, Core HTML Structure | Complete
+|Jan 27| Core Keyboard Functionality, PokeAPI Integration | Complete
+|Jan 28| CSS Styling, Pokemon Animations | Complete
+|Jan 29| Complete MVP, Fine-Tune For Usability | Complete
+|Jan 30| Post-MVP: Pokemon Search, Custom Synthesizer Sounds | Complete
 |Feb 1| Presentations/Project Submission | Incomplete
 
 ## Priority Matrix
@@ -129,5 +129,5 @@ https://pokeapi.co/
 ```
 
 ## Change Log
+ - Adjusted for presentation, readme updated (2/1/2021)
  - v1 uploaded (1/31/2021)
- - 

@@ -56,7 +56,7 @@ function pokeDance() {
   }
 }
 
-// Then building the audio properties and elements
+// Then building the audio properties and elements. This Project draws heavily on the MDN tutorial on building a simple Web Audio synthesizer. https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API/Simple_synth
 
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let oscList = [];
@@ -169,7 +169,7 @@ document.addEventListener('keyup', keyReleased);
 
 // a pinking filter that softens the default oscillator wave sounds, by Zach Denton https://noisehack.com/custom-audio-effects-javascript-web-audio-api/
 
-var bufferSize = 512;
+var bufferSize = 256;
 var effect = (function () {
   var b0, b1, b2, b3, b4, b5, b6;
   b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
