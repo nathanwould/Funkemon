@@ -223,8 +223,6 @@ function playTone(freq) {
 
 function notePressed(event) {
   audioContext.resume();
-  console.log(event.target)
-  console.log(audioContext)
   if (event.buttons & 1) {
     let dataset = event.target.dataset;
 
@@ -257,6 +255,8 @@ function changeVolume(event) {
 // All of the individual key events, good lord
 
 function keyPressed(event) {
+  console.log(event.target)
+  console.log(audioContext)
   audioContext.resume();
   if (event.code == 'KeyA') {
     dataset = document.querySelector('.A').dataset
