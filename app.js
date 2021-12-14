@@ -7,7 +7,7 @@ async function catchEm(pokeName) {
     console.log(data)
     showPoke(data);
   } catch (error) {
-    console.log(error)
+    badSearch();
   }
 }
 
@@ -26,7 +26,7 @@ function showPoke(data) {
   container.append(pokeName)
 }
 
-// Event listener and form to capture pokemon search
+// Event listener to capture pokemon search
 let form = document.querySelector('form')
 
 form.addEventListener('submit', (e) => {
@@ -223,7 +223,8 @@ function playTone(freq) {
 
 function notePressed(event) {
   audioContext.resume();
-
+  console.log(event.target)
+  console.log(audioContext)
   if (event.buttons & 1) {
     let dataset = event.target.dataset;
 
