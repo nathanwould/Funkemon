@@ -201,7 +201,7 @@ function playTone(freq) {
   var biquadFilter = audioContext.createBiquadFilter();
   biquadFilter.type = "lowpass"
   biquadFilter.frequency.setValueAtTime(2000, audioContext.currentTime);
-
+  masterGainNode.gain.value = 1
   osc.connect(masterGainNode);
   osc.connect(effect)
   osc.connect(biquadFilter)
@@ -239,6 +239,7 @@ function noteReleased(event) {
 
   if (dataset && dataset['pressed']) {
     let octave = +dataset['octave'];
+    masterGainNode.gain.value = 0;
     oscList[octave][dataset['note']].stop();
     delete oscList[octave][dataset['note']];
     delete dataset['pressed'];
