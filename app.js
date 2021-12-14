@@ -215,7 +215,7 @@ function playTone(freq) {
   }
   osc.frequency.value = freq;
   osc.start();
-
+  console.log(osc)
   return osc
 }
 
@@ -255,8 +255,6 @@ function changeVolume(event) {
 // All of the individual key events, good lord
 
 function keyPressed(event) {
-  console.log(event.target)
-  console.log(audioContext)
   audioContext.resume();
   if (event.code == 'KeyA') {
     dataset = document.querySelector('.A').dataset
